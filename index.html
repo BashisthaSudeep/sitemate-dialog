@@ -4,8 +4,26 @@
 </head>
 <body>
   <button>Click Me</button>
-  <confirmation-dialog></confirmation-dialog>
+  <confirmation-dialog
+    message="Are you sure you want to continue?"
+    onYes="() => {
+      console.log('Yes')
+    }"
+    onCancel="() => {
+      console.log('Cancel')
+    }"
+  >
+  </confirmation-dialog>
 
   <script src="confirmationDialog.js"></script>
+  <script>
+    const onYes = () => {
+      console.log("YES!!")
+    }
+
+    const onCancel = () => {
+      console.log("Cancel")
+    }
+  </script>
 </body>
 </html>
