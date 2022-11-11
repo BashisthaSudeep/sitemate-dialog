@@ -1,28 +1,77 @@
 <html lang="en">
 <head>
   <title>Confirmation Dialog</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    button {
+      margin: 10px;
+      border: 1px solid rgb(59, 59, 59);
+      background-color: transparent;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-  <button>Click Me</button>
-  <confirmation-dialog
-    message="Are you sure you want to continue?"
-    onYes="() => {
-      console.log('Yes')
-    }"
-    onCancel="() => {
-      console.log('Cancel')
-    }"
-  >
-  </confirmation-dialog>
+  <div class="section">
+    <button data-modal="dialogOne">Click Me</button>
+    <confirmation-dialog
+      id="dialogOne"
+      modalId="dialogOne"
+      message="Are you sure you want to continue?"
+      onYes="() => {
+        onYes('dialogOne')
+      }"
+      onCancel="() => {
+        onCancel('dialogOne')
+      }"
+    >
+    </confirmation-dialog>
+    <p id="dialogOneResult"></p>
+  </div>
+
+  <!-- <div class="section">
+    <button data-modal="dialogTwo">Click Me</button>
+    <confirmation-dialog
+      id="dialogTwo"
+      modalId="dialogTwo"
+      message="Are you sure you want to continue?"
+      onYes="() => {
+        onYes('dialogTwo')
+      }"
+      onCancel="() => {
+        onCancel('dialogTwo')
+      }"
+    >
+    </confirmation-dialog>
+    <p id="dialogTwoResult"></p>
+  </div> -->
+
 
   <script src="confirmationDialog.js"></script>
   <script>
-    const onYes = () => {
-      console.log("YES!!")
+    const dialogs = document.querySelectorAll("[data-modal]");
+
+    dialogs.forEach(function (trigger) {
+      trigger.addEventListener("click", function (event) {
+        event.preventDefault();
+        const modal = document.getElementById(trigger.dataset.modal)
+        modal.shadowRoot.getElementById(trigger.dataset.modal).classList.add("open")
+      });
+    });
+
+
+    const onYes = (resultSelector) => {
+      document.getElementById(`${resultSelector}Result`).innerHTML = `You just clicked "Yes"`
     }
 
-    const onCancel = () => {
-      console.log("Cancel")
+    const onCancel = (resultSelector) => {
+      document.getElementById(`${resultSelector}Result`).innerHTML = `You just clicked "Cancel"`
     }
   </script>
 </body>
